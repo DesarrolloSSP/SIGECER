@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e90882a83e7d4488a68a9f258ce8797e" Name="Diagram1" ZoomLevel="105">
+        <EntityTypeShape EntityType="DBCERCEISModel.cat_AutoReconocimiento" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.cat_entidadesFederativas" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.cat_EstudioAntecedente" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.cat_FirmAutorizado" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.cat_FundamentoLegal" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.cat_Institucion" Width="1.5" PointX="0.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.cat_ModalidadTitulacion" Width="1.5" PointX="0.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.tb_Autorizados" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.tb_Carreras" Width="1.5" PointX="0.75" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBCERCEISModel.tb_configuracion" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="DBCERCEISModel.cat_roles" Width="1.5" PointX="5.125" PointY="10.5" />
+        <EntityTypeShape EntityType="DBCERCEISModel.tb_usuarios" Width="1.5" PointX="7.375" PointY="9.75" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_usuarios_car_roles" />
+        <EntityTypeShape EntityType="DBCERCEISModel.tb_token" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="DBCERCEISModel.tb_log" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DBCERCEISModel.tb_titulosEmitidos" Width="1.5" PointX="3" PointY="13.375" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_cat_AutoReconocimiento" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_cat_entidadesFederativas" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_cat_entidadesFederativas1" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_cat_EstudioAntecedente" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_cat_FundamentoLegal" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_cat_Institucion" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_cat_ModalidadTitulacion" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_tb_Autorizados" />
+        <AssociationConnector Association="DBCERCEISModel.FK_tb_titulosEmitidos_tb_Carreras" />
+        <EntityTypeShape EntityType="DBCERCEISModel.vw_TitulosVista" Width="1.5" PointX="9.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
