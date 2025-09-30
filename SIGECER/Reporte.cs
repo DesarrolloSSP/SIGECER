@@ -54,7 +54,8 @@ namespace Sigecer
                 DateTime dt = DateTime.Parse(fecha);
                 Guid folio = Guid.Parse(fol);
 
-                var consultaTitulo = ctx.vw_TitulosVista.Where(a => a.folio_electronico == folio && a.year <= year && a.fecha_gen <= dt).FirstOrDefault();
+                //var consultaTitulo = ctx.vw_TitulosVista.Where(a => a.folio_electronico == folio && a.year <= year && a.fecha_gen <= dt).FirstOrDefault();
+                var consultaTitulo = ctx.vw_TitulosVista.Where(a => a.folio_electronico == folio).FirstOrDefault();
                 if (consultaTitulo != null)
                 {
 
