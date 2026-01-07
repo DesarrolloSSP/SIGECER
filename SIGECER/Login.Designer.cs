@@ -53,11 +53,11 @@
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Gainsboro;
-            this.label4.Location = new System.Drawing.Point(293, 186);
+            this.label4.Location = new System.Drawing.Point(269, 194);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(191, 13);
+            this.label4.Size = new System.Drawing.Size(218, 13);
             this.label4.TabIndex = 43;
-            this.label4.Text = "Todos los derechos reservados SSP Ⓒ";
+            this.label4.Text = "Todos los derechos reservados SSP Ⓒ 2025";
             // 
             // label3
             // 

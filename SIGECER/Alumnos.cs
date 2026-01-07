@@ -165,9 +165,9 @@ namespace Sigecer
         {
             using (DBCERCEISEntities ctx = new DBCERCEISEntities())
             {
-               
+
                 var query = ctx.sp_selladoXML(valor).FirstOrDefault();
-                string curp_ = query.curp;
+                string curp_ = query.curp.Trim();
                 string CadenaOriginal;
 
                 var Certificado = string.Empty;
@@ -176,13 +176,19 @@ namespace Sigecer
                 var firma_key_private = string.Empty;
                 //var firma_key_private = @"" + txtKey.Text.Trim();
                 var firma_cer_public = string.Empty;
-                var firma_e = "capimora";
+                //var firma_e = "capimora";
+
+                var firma_e = "b-2372621";
+
 
                 tb_configuracion rutallaves = ctx.tb_configuracion.Where(x => x.idtconfiguracion == 1).First();
                 if (rutallaves != null)
                 {
-                    firma_key_private = @"" + rutallaves.rutallaves + "\\" + "llave_MOHA.key";
-                    firma_cer_public = @"" + rutallaves.rutallaves + "\\" + "cert_MOHA.cer";
+                    //firma_key_private = @"" + rutallaves.rutallaves + "\\" + "llave_MOHA.key";
+                    //firma_cer_public = @"" + rutallaves.rutallaves + "\\" + "cert_MOHA.cer";
+
+                    firma_key_private = @"" + rutallaves.rutallaves + "\\" + "llave_BEHH.key";
+                    firma_cer_public = @"" + rutallaves.rutallaves + "\\" + "cert_BEHH.cer";
                 }
                 string fecha = "";
                 if (query.ID_MODALIDAD_TITULACION == 1)
