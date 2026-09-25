@@ -15,7 +15,7 @@ namespace Sigecer.Clases
         public string primerApellido { get; set; }
         public string segundoApellido { get; set; }
         public string curp { get; set; }
-        public int carrera { get; set; }
+        //public int carrera { get; set; }
         public string fecha_gen { get; set; }
         public string FechaImpreasion { get; set; } = null;
 

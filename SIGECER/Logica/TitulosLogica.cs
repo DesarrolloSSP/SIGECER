@@ -2,6 +2,9 @@
 using Sigecer.Modelo;
 using System;
 using System.Collections.Generic;
+using System.Data.Common.CommandTrees.ExpressionBuilder;
+using System.Data.Objects;
+using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +29,7 @@ namespace Sigecer.Logica
                 return _TitulosLogica;
             }
         }
-
+        //LISTA ANTERIOR
         public List<dataTitulosEmi> Listar(out string mensaje, string texto)
         {
             using (DBCERCEISEntities ctx = new DBCERCEISEntities())
@@ -130,6 +133,115 @@ namespace Sigecer.Logica
                 return _ListaTitulos;
             }
         }
+
+        public List<dataTitulosEmi> ListarConFiltrosAvanzados(out string mensaje, string folio, string nombre, string curp, int idCarrera, int idModTitu, DateTime? fechaCreacion, DateTime? fechaImpresion)
+        {
+            using (DBCERCEISEntities ctx = new DBCERCEISEntities())
+            {
+                mensaje = string.Empty;
+                List<dataTitulosEmi> _ListaTitulos = new List<dataTitulosEmi>();
+
+                try
+                {
+                    var query = from a in ctx.tb_titulosEmitidos
+                                join b in ctx.cat_ModalidadTitulacion on a.idModTitu equals b.idModTitu
+                                join c in ctx.tb_Carreras on a.IdCarrera equals c.IdCarrera
+                                where a.status == true
+                                select new { a, b, c };
+
+                    // FILTROS DE TEXTO Y COMBOS 
+                    if (!string.IsNullOrWhiteSpace(folio))
+                    {
+                        // Convertimos el texto ingresado
+                        if (Guid.TryParse(folio.Trim(), out Guid guidFolio))
+                        {
+                            
+                            query = query.Where(x => x.a.folio_electronico.HasValue && x.a.folio_electronico.Value == guidFolio);
+                        }
+                        else
+                        {
+                            
+                            query = query.Where(x => false);
+                        }
+                    }
+                    if (!string.IsNullOrWhiteSpace(nombre))
+                    {
+                        string n = nombre.Trim();
+                        query = query.Where(x => (x.a.nombre + " " + x.a.primerApellido + " " + x.a.segundoApellido).Contains(n));
+                    }
+                    if (!string.IsNullOrWhiteSpace(curp))
+                    {
+                        string c = curp.Trim();
+                        query = query.Where(x => x.a.curp.Contains(c));
+                    }
+                    if (idCarrera > 0)
+                    {
+                        query = query.Where(x => x.a.IdCarrera == idCarrera);
+                    }
+                    if (idModTitu > 0)
+                    {
+                        query = query.Where(x => x.a.idModTitu == idModTitu);
+                    }
+
+                    //FILTROS DE FECHA
+
+                    if (fechaCreacion.HasValue)
+                    {
+                        DateTime fCreacion = fechaCreacion.Value.Date;
+                        query = query.Where(x => EntityFunctions.TruncateTime(x.a.fecha_gen) == fCreacion);
+                    }
+
+                    if (fechaImpresion.HasValue)
+                    {
+                        DateTime fImpresion = fechaImpresion.Value.Date;
+                        query = query.Where(x => EntityFunctions.TruncateTime(x.a.FechaImpreasion) == fImpresion);
+                    }
+
+                    var resultados = query.Select(x => new
+                    {
+                        Idtitulo = x.a.IdTitulo,
+                        Folio = x.a.folio_electronico,
+                        Nombre = x.a.nombre,
+                        Paterno = x.a.primerApellido,
+                        Materno = x.a.segundoApellido,
+                        CURP = x.a.curp,
+                        IdCarrera = x.a.IdCarrera,
+                        fecha_gen = x.a.fecha_gen,
+                        FechaImpreasion = x.a.FechaImpreasion,
+                        nombre_Alumno = x.a.nombre.Trim() + " " + x.a.primerApellido.Trim() + " " + x.a.segundoApellido.Trim(),
+                        ModTitu = x.b.Modo_titulacion,
+                        Carrera = x.c.CARRERA
+                    }).ToList();
+
+                    foreach (var a in resultados)
+                    {
+                        _ListaTitulos.Add(new dataTitulosEmi()
+                        {
+                            IdTitulo = a.Idtitulo,
+                            folio_electronico = Convert.ToString(a.Folio),
+                            nombre = a.Nombre,
+                            primerApellido = a.Paterno,
+                            segundoApellido = a.Materno,
+                            curp = a.CURP,
+                            IdCarrera = a.IdCarrera,
+                            fecha_gen = Convert.ToDateTime(a.fecha_gen).ToString("dd/MM/yyyy"),
+                            FechaImpreasion = a.FechaImpreasion != null ? Convert.ToDateTime(a.FechaImpreasion).ToString("dd/MM/yyyy") : " ",
+                            nombre_Alumno = a.nombre_Alumno,
+                            ModTitu = a.ModTitu,
+                            Carrera = a.Carrera
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _ListaTitulos = new List<dataTitulosEmi>();
+                    mensaje = ex.Message;
+                }
+
+                return _ListaTitulos;
+            }
+        }
+
 
 
         public int ConteoRegistros(out int mensaje, string texto)

@@ -7,12 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 using System.Windows.Forms;
 
 namespace Sigecer
@@ -32,16 +34,18 @@ namespace Sigecer
         private void Impresion_titulos_Load(object sender, EventArgs e)
         {
             cargarGrid();
+            CargarCarreras();
+            cargarModoTitulacion();
         }
 
-       //protected void llenarComboBusqeuda()
-       // {
+        //protected void llenarComboBusqeuda()
+        // {
 
-       //     cbBusqueda.Items.Clear();
+        //     cbBusqueda.Items.Clear();
 
-       //     //incluir datos
-       //     cbBusqueda.Items.Add(new  )
-       // }
+        //     //incluir datos
+        //     cbBusqueda.Items.Add(new  )
+        // }
         void cargarGrid()
         {
             try
@@ -157,7 +161,7 @@ namespace Sigecer
                 Guid Fol;
                 folio = Convert.ToString(gvTitulos.Rows[index].Cells["folio_electronico"].Value);
 
-                Fol =  Guid.Parse(folio);
+                Fol = Guid.Parse(folio);
 
                 carrera = Convert.ToInt32(gvTitulos.Rows[index].Cells["IdCarrera"].Value);
                 Reporte titulo = new Reporte(folio, carrera);
@@ -173,7 +177,7 @@ namespace Sigecer
                 _dataLog.usuario = string.Format("{0}", login);
                 _dataLog.Modulo = "IMPRIMIR TITULO";
                 _dataLog.Tipo = "IMP";
-                _dataLog.Modificacion = "SE GENERA EL TITULO PARA IMPRESIÓN CON EL FOLIO: "+ folio;
+                _dataLog.Modificacion = "SE GENERA EL TITULO PARA IMPRESIÓN CON EL FOLIO: " + folio;
                 int InLog = Log.Instancia.LogInsert(_dataLog, out mensaje);
             }
 
@@ -205,32 +209,148 @@ namespace Sigecer
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-
-            string mesaje = string.Empty;
-            int num = 0;
-            string NombreBuscar = txtBuscar.Text;
-
-
-            if (NombreBuscar != "")
+            try
             {
-                _dataLog = new dataLog();
-                _dataLog.usuario = string.Format("{0}", login);
-                _dataLog.Modulo = "IMPRIMIR TITULO";
-                _dataLog.Tipo = "BUSQUEDA";
-                _dataLog.Modificacion = "SE BUSCA AL ALUMNO: " + NombreBuscar;
-                int InLog = Log.Instancia.LogInsert(_dataLog, out mensaje);
+                string mensaje = string.Empty;
+                gvTitulos.AutoGenerateColumns = false;
 
+                int idCarrera = cmbCarrera.SelectedValue != null ? Convert.ToInt32(cmbCarrera.SelectedValue) : 0;
+                int idModTitu = cmbModoTitulacion.SelectedValue != null ? Convert.ToInt32(cmbModoTitulacion.SelectedValue) : 0;
+
+                // EVALUACIÓN DE LAS FECHAS:
+
+                DateTime? fechaCreacion = dtpFechaCreacion.Checked ? dtpFechaCreacion.Value : (DateTime?)null;
+                DateTime? fechaImpresion = dtpFechaImpresion.Checked ? dtpFechaImpresion.Value : (DateTime?)null;
+
+                // Llamamos al método con los 2 parámetros de fecha
+                var resultado = TitulosLogica.Instancia.ListarConFiltrosAvanzados(
+                    out mensaje,
+                    txtFolio.Text,
+                    txtAlumno.Text,
+                    txtCurp.Text,
+                    idCarrera,
+                    idModTitu,
+                    fechaCreacion,
+                    fechaImpresion
+                );
+
+                gvTitulos.DataSource = resultado;
+                lblCantRe.Text = resultado.Count.ToString();
+
+                if (!string.IsNullOrEmpty(mensaje))
+                {
+                    MessageBox.Show("Aviso: " + mensaje, "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-
-            gvTitulos.AutoGenerateColumns = false;
-            gvTitulos.DataSource = TitulosLogica.Instancia.Listar(out mensaje, NombreBuscar);
-            lblCantRe.Text = Convert.ToString(TitulosLogica.Instancia.ConteoRegistros(out num, NombreBuscar));
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error en la búsqueda: " + ex.Message);
+            }
         }
+
+
+
+
+        //CODIGO ANTERIOR
+        //string mesaje = string.Empty;
+        //int num = 0;
+        //string NombreBuscar = TxtAlumno.Text;
+
+
+        //if (NombreBuscar != "")
+        //{
+        //    _dataLog = new dataLog();
+        //    _dataLog.usuario = string.Format("{0}", login);
+        //    _dataLog.Modulo = "IMPRIMIR TITULO";
+        //    _dataLog.Tipo = "BUSQUEDA";
+        //    _dataLog.Modificacion = "SE BUSCA AL ALUMNO: " + NombreBuscar;
+        //    int InLog = Log.Instancia.LogInsert(_dataLog, out mensaje);
+
+        //}
+
+        //gvTitulos.AutoGenerateColumns = false;
+        //gvTitulos.DataSource = TitulosLogica.Instancia.Listar(out mensaje, NombreBuscar);
+        //lblCantRe.Text = Convert.ToString(TitulosLogica.Instancia.ConteoRegistros(out num, NombreBuscar));
+
+
 
         private void txtBuscar_Enter(object sender, EventArgs e)
         {
-            txtBuscar.Text = "";
+            txtAlumno.Text = "";
+        }
+
+        private void CargarCarreras()
+        {
+            using (DBCERCEISEntities ctx = new DBCERCEISEntities())
+            {
+                try
+                {
+
+                    var listaCarreras = ctx.tb_Carreras
+                                 .OrderBy(c => c.CARRERA)
+                                 .Select(c => new { c.IdCarrera, c.CARRERA })
+                                 .ToList();
+
+                    
+                    cmbCarrera.DisplayMember = "CARRERA";
+                    cmbCarrera.ValueMember = "IdCarrera";
+
+                    
+                    cmbCarrera.DataSource = listaCarreras;
+
+
+                    cmbCarrera.SelectedIndex = -1;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cargar el catálogo de carreras: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void cargarModoTitulacion() 
+        {
+            using (DBCERCEISEntities ctx = new DBCERCEISEntities())
+
+                try
+                {
+                    var listaModoTitulacion = ctx.cat_ModalidadTitulacion
+                                                .OrderBy(mt => mt.idModTitu)
+                                                .Select(mt => new { mt.idModTitu,mt.Modo_titulacion})
+                                                .ToList();
+
+                    cmbModoTitulacion.DisplayMember = "Modo_titulacion";
+                    cmbModoTitulacion.ValueMember = "idModTitu";
+
+                    cmbModoTitulacion.DataSource = listaModoTitulacion;
+
+                    cmbModoTitulacion .SelectedIndex = -1;
+
+
+                } catch(Exception ex)
+                {
+
+                    MessageBox.Show($"Error al cargar el catálogo de Modalidad de Titulación : {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } 
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Vaciar cuadros de texto
+            txtFolio.Clear();
+            txtAlumno.Clear();
+            txtCurp.Clear();
+
+            //Restablecer ComboBoxes a su estado vacío
+            cmbCarrera.SelectedIndex = -1;
+            cmbModoTitulacion.SelectedIndex = -1;
+
+            // Desmarcar o reiniciar el control de fecha
+            dtpFechaCreacion.Checked = false;
+
+            // Volver a cargar el Grid completo usando tu método original de la arquitectura
+            cargarGrid();
         }
     }
 }
