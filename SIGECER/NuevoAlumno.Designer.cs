@@ -125,7 +125,6 @@ namespace Sigecer
             this.tbmatricula.Name = "tbmatricula";
             this.tbmatricula.Size = new System.Drawing.Size(227, 20);
             this.tbmatricula.TabIndex = 6;
-            //this.tbmatricula.Validating += new System.ComponentModel.CancelEventHandler(this.Tbmatricula_Validating);
             // 
             // label8
             // 
@@ -152,7 +151,6 @@ namespace Sigecer
             this.tbemail.Name = "tbemail";
             this.tbemail.Size = new System.Drawing.Size(268, 20);
             this.tbemail.TabIndex = 5;
-            //this.tbemail.Validating += new System.ComponentModel.CancelEventHandler(this.Tbemail_Validating);
             // 
             // label4
             // 
@@ -170,7 +168,6 @@ namespace Sigecer
             this.tbcurp.Name = "tbcurp";
             this.tbcurp.Size = new System.Drawing.Size(178, 20);
             this.tbcurp.TabIndex = 4;
-            //this.tbcurp.Validating += new System.ComponentModel.CancelEventHandler(this.Tbcurp_Validating);
             // 
             // tbapemat
             // 
@@ -180,7 +177,6 @@ namespace Sigecer
             this.tbapemat.Name = "tbapemat";
             this.tbapemat.Size = new System.Drawing.Size(178, 20);
             this.tbapemat.TabIndex = 3;
-            //this.tbapemat.Validating += new System.ComponentModel.CancelEventHandler(this.Tbapemat_Validating);
             // 
             // tbapepat
             // 
@@ -190,7 +186,6 @@ namespace Sigecer
             this.tbapepat.Name = "tbapepat";
             this.tbapepat.Size = new System.Drawing.Size(178, 20);
             this.tbapepat.TabIndex = 2;
-            //this.tbapepat.Validating += new System.ComponentModel.CancelEventHandler(this.Tbapepat_Validating);
             // 
             // label3
             // 
@@ -219,7 +214,6 @@ namespace Sigecer
             this.tbnombre.Name = "tbnombre";
             this.tbnombre.Size = new System.Drawing.Size(178, 20);
             this.tbnombre.TabIndex = 1;
-            //this.tbnombre.Validating += new System.ComponentModel.CancelEventHandler(this.Tbnombre_Validating);
             // 
             // label1
             // 

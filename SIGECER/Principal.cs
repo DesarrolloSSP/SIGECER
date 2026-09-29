@@ -172,5 +172,11 @@ namespace Sigecer
 
             R_alumnos.ShowDialog();
         }
+
+        private void base64ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmB64_XML B64XML = new FrmB64_XML();
+            B64XML.ShowDialog();
+        }
     }
 }

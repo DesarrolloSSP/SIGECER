@@ -142,6 +142,12 @@
     <Compile Include="FrmAdminUser.Designer.cs">
       <DependentUpon>FrmAdminUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmB64-XML.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmB64-XML.Designer.cs">
+      <DependentUpon>FrmB64-XML.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmLlaves.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +315,9 @@
     <EmbeddedResource Include="FrmAdminUser.resx">
       <DependentUpon>FrmAdminUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmB64-XML.resx">
+      <DependentUpon>FrmB64-XML.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmLlaves.resx">
       <DependentUpon>FrmLlaves.cs</DependentUpon>
     </EmbeddedResource>
@@ -406,6 +415,7 @@
       <DependentUpon>Modelo.edmx</DependentUpon>
       <LastGenOutput>Modelo.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\copiar %281%29.jpg" />
     <Content Include="Titulos.ico" />
     <None Include="Resources\impresora.png" />
     <None Include="Resources\removeuser.ico" />

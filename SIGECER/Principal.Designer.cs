@@ -49,6 +49,7 @@ namespace Sigecer
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.base64ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -62,7 +63,8 @@ namespace Sigecer
             this.alumnosToolStripMenuItem,
             this.administraciónToolStripMenuItem,
             this.generarTokenToolStripMenuItem,
-            this.imprimirTituloToolStripMenuItem});
+            this.imprimirTituloToolStripMenuItem,
+            this.base64ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -218,6 +220,13 @@ namespace Sigecer
             this.tssl.Size = new System.Drawing.Size(127, 17);
             this.tssl.Text = "toolStripStatusLabel1";
             // 
+            // base64ToolStripMenuItem
+            // 
+            this.base64ToolStripMenuItem.Name = "base64ToolStripMenuItem";
+            this.base64ToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.base64ToolStripMenuItem.Text = "B64 - XML";
+            this.base64ToolStripMenuItem.Click += new System.EventHandler(this.base64ToolStripMenuItem_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,6 +277,7 @@ namespace Sigecer
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tssl;
         private System.Windows.Forms.ToolStripMenuItem imprimirTituloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem base64ToolStripMenuItem;
     }
 }
 

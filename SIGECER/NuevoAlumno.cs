@@ -389,48 +389,97 @@ namespace Sigecer
 
         public bool ValidaDatos()
         {
-            bool x = true;
 
+            // Validar Cajas de Texto Básicas
+            if (string.IsNullOrWhiteSpace(tbmatricula.Text)) return MostrarError("El campo Matrícula/Folio Control es obligatorio.", tbmatricula);
+            if (string.IsNullOrWhiteSpace(tbnombre.Text)) return MostrarError("El campo Nombre es obligatorio.", tbnombre);
 
+            // VALIDACIÓN DE APELLIDOS: Al menos uno debe estar lleno
+            bool tienePrimerApellido = !string.IsNullOrWhiteSpace(tbapepat.Text);
+            bool tieneSegundoApellido = !string.IsNullOrWhiteSpace(tbapemat.Text);
 
-            if (string.IsNullOrWhiteSpace(tbnombre.Text))
+            if (!tienePrimerApellido && !tieneSegundoApellido)
             {
-                tbnombre.Focus();
-                MessageBox.Show("El nombre no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                x = false;
+                return MostrarError("El alumno debe contar con al menos un apellido (Primer o Segundo Apellido).", tbapepat);
             }
 
-            //if (string.IsNullOrWhiteSpace(tbapepat.Text))
+            // Continuación de Cajas de Texto
+            if (string.IsNullOrWhiteSpace(tbcurp.Text)) return MostrarError("El campo CURP es obligatorio.", tbcurp);
+            if (string.IsNullOrWhiteSpace(tbemail.Text)) return MostrarError("El Correo Electrónico es obligatorio.", tbemail);
+            if (string.IsNullOrWhiteSpace(tbinsproc.Text)) return MostrarError("La Institución de Procedencia es obligatoria.", tbinsproc);
+
+            // Validar ComboBoxes
+            if (cbcarrera.SelectedValue == null || Convert.ToInt32(cbcarrera.SelectedValue) <= 0)
+                return MostrarError("Debe seleccionar una Carrera válida.", cbcarrera);
+
+            if (cbautope.SelectedValue == null || Convert.ToInt32(cbautope.SelectedValue) <= 0)
+                return MostrarError("Debe seleccionar la Autorización del plan de estudios.", cbautope);
+
+            if (cbmodtit.SelectedValue == null || Convert.ToInt32(cbmodtit.SelectedValue) <= 0)
+                return MostrarError("Debe seleccionar una Modalidad de Titulación.", cbmodtit);
+
+            if (cbfunss.SelectedValue == null || Convert.ToInt32(cbfunss.SelectedValue) <= 0)
+                return MostrarError("Debe seleccionar el Fundamento de Servicio Social.", cbfunss);
+
+            if (cbtipestant.SelectedValue == null || Convert.ToInt32(cbtipestant.SelectedValue) <= 0)
+                return MostrarError("Debe seleccionar el Tipo de Estudio Antecedente.", cbtipestant);
+
+            if (cbefant.SelectedValue == null || Convert.ToInt32(cbefant.SelectedValue) <= 0)
+                return MostrarError("Debe seleccionar la Entidad Federativa Antecedente.", cbefant);
+
+            return true;
+        }
+
+        private bool MostrarError(string mensajeError, Control controlInvalido)
+        {
+            MessageBox.Show(mensajeError, "Validación de datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            controlInvalido.Focus();
+            return false;
+
+
+            ///----CODIGO ANTERIOR-- 
+            //bool x = true;
+
+
+
+            //if (string.IsNullOrWhiteSpace(tbnombre.Text))
             //{
-            //    //e.Cancel = true;
-            //    tbapepat.Focus();
-            //    //errorProvider1.SetError(tbapepat, "El Apellido Paterno no puede ser vacio");
-            //    MessageBox.Show("El Apellido Paterno no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    tbnombre.Focus();
+            //    MessageBox.Show("El nombre no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    x = false;
             //}
-            if (string.IsNullOrWhiteSpace(tbcurp.Text))
-            {
-                tbapemat.Focus();
-                MessageBox.Show("La CURP no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                x = false;
-            }
-            if (string.IsNullOrWhiteSpace(tbmatricula.Text))
-            {
-                tbmatricula.Focus();
-                MessageBox.Show("El folio no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                x = false;
-            }
-            if (string.IsNullOrWhiteSpace(tbinsproc.Text))
-            {
-                MessageBox.Show("La institución de procedencia no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                x = false;
-            }
-            if ((cbtipestant.SelectedIndex == 0 || cbtipestant.SelectedIndex == 1) && (string.IsNullOrWhiteSpace(tbcedprof.Text)))
-            {
-                MessageBox.Show("La cédula no puede no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                x = false;
-            }
-            return x;
+
+            ////if (string.IsNullOrWhiteSpace(tbapepat.Text))
+            ////{
+            ////    //e.Cancel = true;
+            ////    tbapepat.Focus();
+            ////    //errorProvider1.SetError(tbapepat, "El Apellido Paterno no puede ser vacio");
+            ////    MessageBox.Show("El Apellido Paterno no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ////    x = false;
+            ////}
+            //if (string.IsNullOrWhiteSpace(tbcurp.Text))
+            //{
+            //    tbapemat.Focus();
+            //    MessageBox.Show("La CURP no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    x = false;
+            //}
+            //if (string.IsNullOrWhiteSpace(tbmatricula.Text))
+            //{
+            //    tbmatricula.Focus();
+            //    MessageBox.Show("El folio no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    x = false;
+            //}
+            //if (string.IsNullOrWhiteSpace(tbinsproc.Text))
+            //{
+            //    MessageBox.Show("La institución de procedencia no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    x = false;
+            //}
+            //if ((cbtipestant.SelectedIndex == 0 || cbtipestant.SelectedIndex == 1) && (string.IsNullOrWhiteSpace(tbcedprof.Text)))
+            //{
+            //    MessageBox.Show("La cédula no puede no puede ser vacio", "Validación de alumno", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    x = false;
+            //}
+            //return x;
         }
 
         private void Tbinsproc_Validating(object sender, CancelEventArgs e)
