@@ -1,25 +1,30 @@
-﻿using System;
-using System.Globalization;
+﻿using Sigecer.Clases;
+using Sigecer.Logica;
+using Sigecer.Modelo;
+using System;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
-using Sigecer.Modelo;
-using XSDToXML.Utils;
-using System.Xml.Schema;
 using System.Xml.Serialization;
-using Sigecer.Clases;
-using Sigecer.Logica;
+using XSDToXML.Utils;
 
 namespace Sigecer
 {
     public partial class Alumnos : Form
     {
+        #region Campos Privados
+        private int _selectedIdTitulo;
+        private DataTable _alumnosData;
+        private bool _isLoading = false;
+        private string _currentFilter = string.Empty;
         int id;
         string rutaxml = "";
         public string login { get; set; }
         public dataLog _dataLog { get; set; }
         string mensaje = string.Empty;
+        #endregion
         public Alumnos()
         {
             InitializeComponent();
@@ -36,15 +41,17 @@ namespace Sigecer
                     {
                         string rutacer;
                         rutaxml = ruta.rutaxml.Trim().ToUpper();
+                        //rutaxml = "C:\\.trash\\XMLCEIS";
                         rutacer = ruta.rutallaves.Trim().ToUpper();
+                        //rutacer = "C:\\RHUERTAC\\FIEL_HUCR7906297U4_20220426133755";
                         if (!Directory.Exists(rutaxml))
                         {
-                            MessageBox.Show("La carpeta destino de los XML no ya existe. Favor de validar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("La carpeta destino de los archivos XML no existe.", "Validar", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             this.Close();
                         }
                         if (!Directory.Exists(rutacer))
                         {
-                            MessageBox.Show("La carpeta de los archivos llave no ya existe. Favor de validar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("La carpeta de los archivos llave no existe.", "Validar", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             this.Close();
                         }
                     }
@@ -56,16 +63,17 @@ namespace Sigecer
             }
         }
 
+        #region Eventos del Formulario
         private void Alumnos_Load(object sender, EventArgs e)
         {
             using (DBCERCEISEntities ctx = new DBCERCEISEntities())
             {
                 var query = ctx.sel_alumnos().ToList();
-                dgv_alumnos.DataSource = query;
-                if (dgv_alumnos.Rows.Count != 0)
+                dgvAlumnos.DataSource = query;
+                if (dgvAlumnos.Rows.Count != 0)
                 {
-                    dgv_alumnos.Rows[0].Selected = true;
-                    Dgv_alumnos_CellClick(dgv_alumnos, new DataGridViewCellEventArgs(0, 0));
+                    dgvAlumnos.Rows[0].Selected = true;
+                    DgvAlumnos_CellClick(dgvAlumnos, new DataGridViewCellEventArgs(0, 0));
                 }
 
 
@@ -76,21 +84,50 @@ namespace Sigecer
                 }
             }
             BuscaRuta();
-            validaToken();
+            ValidaToken();
+        }
+        private void Alumnos_Shown(object sender, EventArgs e)
+        {
+            txtBuscar.Focus();
+        }
+        private void Alumnos_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.F)
+            {
+                txtBuscar.Focus();
+                txtBuscar.SelectAll();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                btnCancelar.PerformClick();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.F5)
+            {
+                RefreshData();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Enter && txtBuscar.Focused)
+            {
+                btnBuscar.PerformClick();
+                e.Handled = true;
+            }
         }
 
-        public void buscarAlum()
+        #endregion
+
+        public void BuscarAlum()
         {
             using (DBCERCEISEntities ctx = new DBCERCEISEntities())
             {
                 var query = ctx.sel_alumnos().ToList();
-                dgv_alumnos.DataSource = query;
-                if (dgv_alumnos.Rows.Count != 0)
+                dgvAlumnos.DataSource = query;
+                if (dgvAlumnos.Rows.Count != 0)
                 {
-                    dgv_alumnos.Rows[0].Selected = true;
-                    Dgv_alumnos_CellClick(dgv_alumnos, new DataGridViewCellEventArgs(0, 0));
+                    dgvAlumnos.Rows[0].Selected = true;
+                    DgvAlumnos_CellClick(dgvAlumnos, new DataGridViewCellEventArgs(0, 0));
                 }
-
 
                 else
                 {
@@ -100,7 +137,7 @@ namespace Sigecer
             }
         }
 
-        public void validaToken()
+        public void ValidaToken()
         {
             try
             {
@@ -125,20 +162,20 @@ namespace Sigecer
 
                         if (fechaActual == f_token && r <= a)
                         {
-                            Btn_xml.Enabled = true;
+                            btnSellar.Enabled = true;
                         }
                         else
                         {
                             token.activo = false;
                             ctx.SaveChanges();
-                            Btn_xml.Enabled = false;
-                            MessageBox.Show("El token a caducado, generar nuevo token para el sellado", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            btnSellar.Enabled = false;
+                            MessageBox.Show("El token ha caducado, generar nuevo token para el sellado", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         }
                     }
                     else
                     {
                         MessageBox.Show("No existe token para generar el sellado de los certificados", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        Btn_xml.Enabled = false;
+                        btnSellar.Enabled = false;
                     }
                 }
             }
@@ -148,25 +185,22 @@ namespace Sigecer
             }
         }
 
-
         private void Btncancelar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void Btn_xml_Click(object sender, EventArgs e)
+        private void BtnSellarXML_Click(object sender, EventArgs e)
         {
-            validaToken();
+            ValidaToken();
             int id = csValorCompartido.IdTitulo;
-            MostrarDatos(id);
+            MostrarDatos(/*id*/);
         }
-
-        protected void MostrarDatos(int valor)
+        protected void MostrarDatos(/*int valor*/)
         {
             using (DBCERCEISEntities ctx = new DBCERCEISEntities())
             {
-
-                var query = ctx.sp_selladoXML(valor).FirstOrDefault();
+                var query = ctx.sp_selladoXML(_selectedIdTitulo).FirstOrDefault();
                 string curp_ = query.curp.Trim();
                 string CadenaOriginal;
 
@@ -178,8 +212,7 @@ namespace Sigecer
                 var firma_cer_public = string.Empty;
                 //var firma_e = "capimora";
 
-                var firma_e = "b-2372621";
-
+                var firma_e = "Mogolla79";
 
                 tb_configuracion rutallaves = ctx.tb_configuracion.Where(x => x.idtconfiguracion == 1).First();
                 if (rutallaves != null)
@@ -187,8 +220,10 @@ namespace Sigecer
                     //firma_key_private = @"" + rutallaves.rutallaves + "\\" + "llave_MOHA.key";
                     //firma_cer_public = @"" + rutallaves.rutallaves + "\\" + "cert_MOHA.cer";
 
-                    firma_key_private = @"" + rutallaves.rutallaves + "\\" + "llave_BEHH.key";
-                    firma_cer_public = @"" + rutallaves.rutallaves + "\\" + "cert_BEHH.cer";
+                    //rutallaves.rutallaves = "C:\\RHUERTAC\\FIEL 2030";
+
+                    firma_key_private = @"" + rutallaves.rutallaves + "\\" + "Claveprivada_FIEL_HUCR7906297U4_20260413_140136.key";
+                    firma_cer_public = @"" + rutallaves.rutallaves + "\\" + "00001000000724000346.cer";
                 }
                 string fecha = "";
                 if (query.ID_MODALIDAD_TITULACION == 1)
@@ -210,7 +245,7 @@ namespace Sigecer
                 //"|" + query.NombreEnti.Trim() + "|" + query.institucionProcedencia.Trim() + "|" + query.IdTipo_estudio_antecedente.ToString().Trim() + "|" + query.tipo_estudio.Trim() + "|" + query.IdEntidadExp.ToString().Trim() + "|" + query.NombreEntiExp.Trim() + "|" + query.fechaInicioAnte.ToString().Substring(6, 4) + "-" + query.fechaInicioAnte.ToString().Substring(3, 2) + "-" + query.fechaInicioAnte.ToString().Substring(0, 2) +
                 "|" + query.NombreEnti.Trim() + "|" + query.institucionProcedencia.Trim() + "|" + query.IdTipo_estudio_antecedente.ToString().Trim() + "|" + query.tipo_estudio.Trim() + "|" + query.IdEntExpCat.ToString().Trim() + "|" + query.NombreEntiExp.Trim() + "|" + query.fechaInicioAnte.ToString().Substring(6, 4) + "-" + query.fechaInicioAnte.ToString().Substring(3, 2) + "-" + query.fechaInicioAnte.ToString().Substring(0, 2) +
                 "|" + query.fechaTerminacionAnte.ToString().Substring(6, 4) + "-" + query.fechaTerminacionAnte.ToString().Substring(3, 2) + "-" + query.fechaTerminacionAnte.ToString().Substring(0, 2) + "|" + query.noCedula.Trim() + "||";
-                textBox1.Text = CadenaOriginal;
+                txtLog.Text = CadenaOriginal;
 
                 //openssl_pkey_get_public
                 SelloDigital oSelloDigital = new SelloDigital();
@@ -310,8 +345,8 @@ namespace Sigecer
                 //string sss = @"C:\\Users\\CPONCEM\\DESKTOP\\TITULOS ELECTRONICOS";
                 //doc.Save(sss + "\\" + query.curp.Trim() + ".xml");
                 doc.Save(rutaxml + "\\" + query.curp.Trim() + ".xml");
-                MessageBox.Show("Se genero archivo XML de manera satisfactoria", "Gestión de titulos", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                var _actualizarTitulos = ctx.tb_titulosEmitidos.Where(a => a.IdTitulo == valor).FirstOrDefault();
+                MessageBox.Show("Se generó archivo XML de manera satisfactoria", "Gestión de titulos", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var _actualizarTitulos = ctx.tb_titulosEmitidos.Where(a => a.IdTitulo == _selectedIdTitulo).FirstOrDefault();
                 if (_actualizarTitulos != null)
                 {
                     _actualizarTitulos.status = true;
@@ -321,42 +356,165 @@ namespace Sigecer
                     _actualizarTitulos.folio_electronico = Guid.NewGuid();
                     ctx.SaveChanges();
                 }
-                buscarAlum();
+                BuscarAlum();
 
-                _dataLog = new dataLog();
-                _dataLog.usuario = string.Format("{0}", login);
-                _dataLog.Modulo = "VISTA DE ALUMNOS";
-                _dataLog.Tipo = "XML";
-                _dataLog.Modificacion = "SE GENERA EL XML DEL ALUMNO: " + valor;
+                _dataLog = new dataLog
+                {
+                    usuario = string.Format("{0}", login),
+                    Modulo = "VISTA DE ALUMNOS",
+                    Tipo = "XML",
+                    Modificacion = "SE GENERA EL XML DEL ALUMNO: " + _selectedIdTitulo
+                };
                 int InLog = Log.Instancia.LogInsert(_dataLog, out mensaje);
             }
         }
 
-        private void Dgv_alumnos_CellClick(object sender, DataGridViewCellEventArgs e)
+        #region Eventos del DataGridView
+        private void DgvAlumnos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgv_alumnos.Rows.Count != 0)
+            if (e.RowIndex >= 0 && dgvAlumnos.Rows.Count > 0)
             {
-                try
-                {
-                    dgv_alumnos.CurrentRow.Selected = true;
-                    int idSolicitud = int.Parse(dgv_alumnos.Rows[e.RowIndex].Cells["IdTitulo"].Value.ToString());
-                    //Guid guidSello = Guid.Parse(dgv_alumnos.Rows[e.RowIndex].Cells["folio_electronico"].Value.ToString());
-                    csValorCompartido.IdTitulo = idSolicitud;
-                    //csValorCompartido.Guid = guidSello;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString());
-                }
+                SelectAlumno(e.RowIndex);
             }
-            else
+        }
+        private void DgvAlumnos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
             {
-                MessageBox.Show("No existen alumnos en la base de datos", "Gestión de titulos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.Close();
+                OpenEditForm();
             }
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private void SelectAlumno(int rowIndex)
+        {
+            try
+            {
+                if (rowIndex < 0 || rowIndex >= dgvAlumnos.Rows.Count)
+                    return;
+
+                // Limpiar selección anterior
+                dgvAlumnos.ClearSelection();
+
+                // Seleccionar la fila
+                dgvAlumnos.Rows[rowIndex].Selected = true;
+
+                // Establecer CurrentCell en la primera columna visible
+                // Usamos LINQ para encontrar la primera columna visible
+                var primeraColumnaVisible = dgvAlumnos.Columns
+                    .Cast<DataGridViewColumn>()
+                    .FirstOrDefault(c => c.Visible);
+
+                if (primeraColumnaVisible != null)
+                {
+                    dgvAlumnos.CurrentCell = dgvAlumnos.Rows[rowIndex].Cells[primeraColumnaVisible.Index];
+                }
+
+                // Hacer scroll a la fila seleccionada
+                if (rowIndex >= 0)
+                {
+                    dgvAlumnos.FirstDisplayedScrollingRowIndex = rowIndex;
+                }
+
+                // Obtener el ID de la columna oculta
+                var idCell = dgvAlumnos.Rows[rowIndex].Cells["colIdTitulo"];
+                if (idCell?.Value != null && idCell.Value != DBNull.Value)
+                {
+                    _selectedIdTitulo = Convert.ToInt32(idCell.Value);
+                }
+                else
+                {
+                    _selectedIdTitulo = -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error al seleccionar el registro del alumno.", ex);
+            }
+        }
+
+        #endregion
+
+        #region Acciones CRUD
+
+        private void BtnActualizar_Click(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void OpenEditForm()
+        {
+            try
+            {
+                NuevoAlumno editForm = new NuevoAlumno(_selectedIdTitulo);
+                editForm.user = this.login;
+                editForm.ShowDialog(this);
+                RefreshData();
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error al abrir el formulario de edición", ex);
+            }
+        }
+
+        private void BtnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+        #endregion
+
+        #region Búsqueda
+
+        private void BtnBuscar_Click(object sender, EventArgs e)
+        {
+            ApplyFilter(txtBuscar.Text.Trim());
+        }
+
+        private void TxtBuscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                btnBuscar.PerformClick();
+                e.Handled = true;
+            }
+        }
+
+        private void ApplyFilter(string filterText)
+        {
+            try
+            {
+                _currentFilter = filterText;
+
+                if (_alumnosData != null)
+                {
+                    if (string.IsNullOrEmpty(filterText))
+                    {
+                        _alumnosData.DefaultView.RowFilter = string.Empty;
+                    }
+                    else
+                    {
+                        string safeFilter = filterText.Replace("'", "''");
+                        string filter = string.Format(
+                            "nombre LIKE '%{0}%' OR primerApellido LIKE '%{0}%' OR " +
+                            "segundoApellido LIKE '%{0}%' OR curp LIKE '%{0}%' OR " +
+                            "desc_titulo LIKE '%{0}%'",
+                            safeFilter);
+                        _alumnosData.DefaultView.RowFilter = filter;
+                    }
+
+                    int count = _alumnosData.DefaultView.Count;
+                    UpdateRowCount(count);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error al aplicar el filtro", ex);
+            }
+        }
+
+        #endregion
+        private void BtnEditar_Click(object sender, EventArgs e)
         {
             int idtitulo = csValorCompartido.IdTitulo;
             //Form Modificar = new NuevoAlumno(idtitulo);
@@ -366,9 +524,125 @@ namespace Sigecer
             //    RecuperaDatos(id);
         }
 
-        private void dgv_alumnos_CellEnter(object sender, DataGridViewCellEventArgs e)
+        private void DgvAlumnos_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            id = Convert.ToInt32(dgv_alumnos.Rows[e.RowIndex].Cells[0].Value);
+            id = Convert.ToInt32(dgvAlumnos.Rows[e.RowIndex].Cells[0].Value);
         }
+
+        #region Carga de Datos
+
+        private void LoadAlumnosData()
+        {
+            try
+            {
+                using (var ctx = new DBCERCEISEntities())
+                {
+                    var query = ctx.sel_alumnos().ToList();
+
+                    if (query == null || query.Count == 0)
+                    {
+                        ShowWarning("No existen alumnos en la base de datos");
+                        this.Close();
+                        return;
+                    }
+
+                    // Convertir a DataTable
+                    _alumnosData = new DataTable();
+                    _alumnosData.Columns.Add("IdTitulo", typeof(int));
+                    _alumnosData.Columns.Add("folio_electronico", typeof(string));
+                    _alumnosData.Columns.Add("curp", typeof(string));
+                    _alumnosData.Columns.Add("nombre", typeof(string));
+                    _alumnosData.Columns.Add("primerApellido", typeof(string));
+                    _alumnosData.Columns.Add("segundoApellido", typeof(string));
+                    _alumnosData.Columns.Add("desc_titulo", typeof(string));
+                    _alumnosData.Columns.Add("estatus", typeof(string));
+
+                    foreach (var item in query)
+                    {
+                        _alumnosData.Rows.Add(
+                            item.IdTitulo,
+                            item.folio_electronico,
+                            item.curp,
+                            item.nombre,
+                            item.primerapellido,
+                            item.segundoapellido,
+                            item.DESC_TITULO,
+                            "Activo" 
+                        );
+                    }
+
+                    dgvAlumnos.DataSource = _alumnosData;
+
+                    // Seleccionar primer registro
+                    if (dgvAlumnos.Rows.Count > 0)
+                    {
+                        dgvAlumnos.Rows[0].Selected = true;
+                        SelectAlumno(0);
+                    }
+
+                    UpdateRowCount(_alumnosData.Rows.Count);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cargar los datos de alumnos", ex);
+            }
+        }
+        private void RefreshData()
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                LoadAlumnosData();
+                UpdateStatus("Datos actualizados correctamente");
+                ShowInfo("Datos actualizados correctamente");
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error al actualizar los datos", ex);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+        #endregion
+
+        #region Métodos UI
+
+        private void UpdateStatus(string message)
+        {
+            this.Text = $"🎓 Gestión de Alumnos - {message}";
+        }
+
+        private void UpdateRowCount(int count)
+        {
+            lblRegistros.Text = $"📊 Total de registros: {count}";
+        }
+
+        private void ShowError(string message, Exception ex = null)
+        {
+            string errorMsg = message;
+            if (ex != null)
+            {
+                errorMsg += $"\n\nDetalle: {ex.Message}";
+                if (ex.InnerException != null)
+                    errorMsg += $"\nInner: {ex.InnerException.Message}";
+            }
+
+            MessageBox.Show(errorMsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void ShowWarning(string message)
+        {
+            MessageBox.Show(message, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ShowInfo(string message)
+        {
+            MessageBox.Show(message, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        #endregion
     }
 }

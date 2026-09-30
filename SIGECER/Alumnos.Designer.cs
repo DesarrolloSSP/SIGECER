@@ -1,17 +1,9 @@
-﻿
-namespace Sigecer
+﻿namespace Sigecer
 {
     partial class Alumnos
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -23,199 +15,444 @@ namespace Sigecer
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Alumnos));
-            this.dgv_alumnos = new System.Windows.Forms.DataGridView();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.Btn_xml = new System.Windows.Forms.Button();
-            this.btncancelar = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+
+            // ==================== DATA GRID VIEW ====================
+            this.dgvAlumnos = new System.Windows.Forms.DataGridView();
+
+            // ==================== COLUMNAS ====================
+            this.colIdTitulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFolioElectronico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCurp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPaterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMaterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCarrera = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+
+            // ==================== PANELES ====================
+            this.panelSuperior = new System.Windows.Forms.Panel();
+            this.panelBusqueda = new System.Windows.Forms.Panel();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.lblBuscar = new System.Windows.Forms.Label();
+            this.panelAcciones = new System.Windows.Forms.Panel();
+            this.btnActualizar = new System.Windows.Forms.Button();
+            this.btnSellar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
-            this.idtitulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.folio_electronico = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Curp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Carrera = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_alumnos)).BeginInit();
+            this.btnCancelar = new System.Windows.Forms.Button();
+
+            // ==================== AREA DE LOG ====================
+            this.txtLog = new System.Windows.Forms.TextBox();
+
+            // ==================== PANEL INFERIOR ====================
+            this.panelInferior = new System.Windows.Forms.Panel();
+            this.lblRegistros = new System.Windows.Forms.Label();
+            this.lblSeparador = new System.Windows.Forms.Label();
+
+            // ==================== INICIALIZACIÓN ====================
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAlumnos)).BeginInit();
+            this.panelSuperior.SuspendLayout();
+            this.panelBusqueda.SuspendLayout();
+            this.panelAcciones.SuspendLayout();
+            this.panelInferior.SuspendLayout();
             this.SuspendLayout();
+
             // 
-            // dgv_alumnos
+            // dgvAlumnos - DataGridView Principal
             // 
-            this.dgv_alumnos.AllowUserToAddRows = false;
-            this.dgv_alumnos.AllowUserToDeleteRows = false;
-            this.dgv_alumnos.AllowUserToOrderColumns = true;
-            this.dgv_alumnos.AllowUserToResizeColumns = false;
-            this.dgv_alumnos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_alumnos.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            this.dgv_alumnos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_alumnos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idtitulo,
-            this.folio_electronico,
-            this.Curp,
-            this.Nombre,
-            this.Paterno,
-            this.Materno,
-            this.Carrera});
-            this.dgv_alumnos.Location = new System.Drawing.Point(12, 69);
-            this.dgv_alumnos.Name = "dgv_alumnos";
-            this.dgv_alumnos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_alumnos.ShowEditingIcon = false;
-            this.dgv_alumnos.Size = new System.Drawing.Size(875, 345);
-            this.dgv_alumnos.TabIndex = 0;
-            this.dgv_alumnos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_alumnos_CellClick);
-            this.dgv_alumnos.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_alumnos_CellEnter);
+            this.dgvAlumnos.AllowUserToAddRows = false;
+            this.dgvAlumnos.AllowUserToDeleteRows = false;
+            this.dgvAlumnos.AllowUserToOrderColumns = true;
+            this.dgvAlumnos.AllowUserToResizeColumns = false;
+            this.dgvAlumnos.AllowUserToResizeRows = false;
+
+            // Configuración visual moderna
+            this.dgvAlumnos.BackgroundColor = System.Drawing.Color.White;
+            this.dgvAlumnos.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvAlumnos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvAlumnos.GridColor = System.Drawing.Color.FromArgb(230, 230, 230);
+            this.dgvAlumnos.RowHeadersVisible = false;
+
+            // Comportamiento y auto-sizing
+            this.dgvAlumnos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvAlumnos.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.dgvAlumnos.ColumnHeadersHeight = 40;
+            this.dgvAlumnos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+            // Estilos de cabecera
+            this.dgvAlumnos.EnableHeadersVisualStyles = false;
+            this.dgvAlumnos.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(52, 73, 94);
+            this.dgvAlumnos.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            this.dgvAlumnos.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.dgvAlumnos.ColumnHeadersDefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+
+            // Estilos de celdas
+            this.dgvAlumnos.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.dgvAlumnos.DefaultCellStyle.Padding = new System.Windows.Forms.Padding(8, 5, 8, 5);
+            this.dgvAlumnos.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(41, 128, 185);
+            this.dgvAlumnos.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.White;
+
+            // Estilos alternados
+            this.dgvAlumnos.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(248, 249, 250);
+
+            // Altura de filas
+            this.dgvAlumnos.RowTemplate.Height = 35;
+            this.dgvAlumnos.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+
+            // Selección
+            this.dgvAlumnos.ReadOnly = true;
+            this.dgvAlumnos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAlumnos.ShowEditingIcon = false;
+            this.dgvAlumnos.StandardTab = true;
+
+            // Columnas
+            this.dgvAlumnos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+                this.colIdTitulo,
+                this.colFolioElectronico,
+                this.colCurp,
+                this.colNombre,
+                this.colPaterno,
+                this.colMaterno,
+                this.colCarrera,
+                this.colEstatus});
+
+            // Ubicación y tamaño
+            this.dgvAlumnos.Location = new System.Drawing.Point(12, 75);
+            this.dgvAlumnos.Name = "dgvAlumnos";
+            this.dgvAlumnos.Size = new System.Drawing.Size(950, 400);
+            this.dgvAlumnos.TabIndex = 0;
+
+            // Eventos
+            this.dgvAlumnos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAlumnos_CellClick);
+            this.dgvAlumnos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAlumnos_CellDoubleClick);
+
             // 
-            // groupBox1
+            // Configuración de Columnas
             // 
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(875, 51);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Filtros";
+
+            // colIdTitulo
+            this.colIdTitulo.DataPropertyName = "IdTitulo";
+            this.colIdTitulo.HeaderText = "ID";
+            this.colIdTitulo.Name = "colIdTitulo";
+            this.colIdTitulo.Visible = false;
+
+            // colFolioElectronico
+            this.colFolioElectronico.DataPropertyName = "folio_electronico";
+            this.colFolioElectronico.HeaderText = "Folio Electrónico";
+            this.colFolioElectronico.Name = "colFolioElectronico";
+            this.colFolioElectronico.Visible = false;
+
+            // colCurp
+            this.colCurp.DataPropertyName = "curp";
+            this.colCurp.FillWeight = 30F;
+            this.colCurp.HeaderText = "CURP";
+            this.colCurp.Name = "colCurp";
+            this.colCurp.ReadOnly = true;
+
+            // colNombre
+            this.colNombre.DataPropertyName = "nombre";
+            this.colNombre.FillWeight = 60F;
+            this.colNombre.HeaderText = "Nombre(s)";
+            this.colNombre.Name = "colNombre";
+            this.colNombre.ReadOnly = true;
+
+            // colPaterno
+            this.colPaterno.DataPropertyName = "primerApellido";
+            this.colPaterno.FillWeight = 80F;
+            this.colPaterno.HeaderText = "Apellido Paterno";
+            this.colPaterno.Name = "colPaterno";
+            this.colPaterno.ReadOnly = true;
+
+            // colMaterno
+            this.colMaterno.DataPropertyName = "segundoApellido";
+            this.colMaterno.FillWeight = 80F;
+            this.colMaterno.HeaderText = "Apellido Materno";
+            this.colMaterno.Name = "colMaterno";
+            this.colMaterno.ReadOnly = true;
+
+            // colCarrera
+            this.colCarrera.DataPropertyName = "desc_titulo";
+            this.colCarrera.FillWeight = 120F;
+            this.colCarrera.HeaderText = "Carrera";
+            this.colCarrera.Name = "colCarrera";
+            this.colCarrera.ReadOnly = true;
+
+            // colEstatus
+            this.colEstatus.DataPropertyName = "estatus";
+            this.colEstatus.FillWeight = 50F;
+            this.colEstatus.HeaderText = "Estatus";
+            this.colEstatus.Name = "colEstatus";
+
             // 
-            // Btn_xml
+            // panelSuperior - Panel Principal Superior
             // 
-            this.Btn_xml.Location = new System.Drawing.Point(904, 69);
-            this.Btn_xml.Name = "Btn_xml";
-            this.Btn_xml.Size = new System.Drawing.Size(91, 57);
-            this.Btn_xml.TabIndex = 2;
-            this.Btn_xml.Text = "&Sellar XML";
-            this.Btn_xml.UseVisualStyleBackColor = true;
-            this.Btn_xml.Click += new System.EventHandler(this.Btn_xml_Click);
+            this.panelSuperior.BackColor = System.Drawing.Color.FromArgb(245, 246, 248);
+            this.panelSuperior.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSuperior.Controls.Add(this.panelBusqueda);
+            this.panelSuperior.Controls.Add(this.panelAcciones);
+            this.panelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelSuperior.Location = new System.Drawing.Point(0, 0);
+            this.panelSuperior.Name = "panelSuperior";
+            this.panelSuperior.Padding = new System.Windows.Forms.Padding(10);
+            this.panelSuperior.Size = new System.Drawing.Size(1100, 65);
+            this.panelSuperior.TabIndex = 1;
+
             // 
-            // btncancelar
+            // panelBusqueda - Panel de Búsqueda
             // 
-            this.btncancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btncancelar.Location = new System.Drawing.Point(904, 384);
-            this.btncancelar.Name = "btncancelar";
-            this.btncancelar.Size = new System.Drawing.Size(91, 30);
-            this.btncancelar.TabIndex = 3;
-            this.btncancelar.Text = "&Cancelar";
-            this.btncancelar.UseVisualStyleBackColor = true;
-            this.btncancelar.Click += new System.EventHandler(this.Btncancelar_Click);
+            this.panelBusqueda.Controls.Add(this.btnBuscar);
+            this.panelBusqueda.Controls.Add(this.txtBuscar);
+            this.panelBusqueda.Controls.Add(this.lblBuscar);
+            this.panelBusqueda.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelBusqueda.Location = new System.Drawing.Point(10, 10);
+            this.panelBusqueda.Name = "panelBusqueda";
+            this.panelBusqueda.Size = new System.Drawing.Size(450, 43);
+            this.panelBusqueda.TabIndex = 0;
+
             // 
-            // textBox1
+            // lblBuscar
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 433);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(875, 71);
-            this.textBox1.TabIndex = 4;
+            this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular);
+            this.lblBuscar.Location = new System.Drawing.Point(3, 11);
+            this.lblBuscar.Name = "lblBuscar";
+            this.lblBuscar.Size = new System.Drawing.Size(54, 19);
+            this.lblBuscar.TabIndex = 0;
+            this.lblBuscar.Text = "Buscar:";
+
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtBuscar.Location = new System.Drawing.Point(63, 8);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(280, 25);
+            this.txtBuscar.TabIndex = 1;
+            this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBuscar_KeyPress);
+
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.BackColor = System.Drawing.Color.FromArgb(84, 110, 122);
+            this.btnBuscar.FlatAppearance.BorderSize = 0;
+            this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnBuscar.ForeColor = System.Drawing.Color.White;
+            this.btnBuscar.Location = new System.Drawing.Point(349, 7);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(90, 27);
+            this.btnBuscar.TabIndex = 2;
+            this.btnBuscar.Text = "🔍 Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.BtnBuscar_Click);
+
+            // 
+            // panelAcciones - Panel de Botones de Acción
+            // 
+            this.panelAcciones.Controls.Add(this.btnActualizar);
+            this.panelAcciones.Controls.Add(this.btnSellar);
+            this.panelAcciones.Controls.Add(this.btnEditar);
+            this.panelAcciones.Controls.Add(this.btnCancelar);
+            this.panelAcciones.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelAcciones.Location = new System.Drawing.Point(496, 10);
+            this.panelAcciones.Name = "panelAcciones";
+            this.panelAcciones.Size = new System.Drawing.Size(592, 43);
+            this.panelAcciones.TabIndex = 1;
+
+            // 
+            // btnActualizar
+            // 
+            this.btnActualizar.BackColor = System.Drawing.Color.FromArgb(96, 125, 107);
+            this.btnActualizar.FlatAppearance.BorderSize = 0;
+            this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActualizar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnActualizar.ForeColor = System.Drawing.Color.White;
+            this.btnActualizar.Location = new System.Drawing.Point(3, 5);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(110, 32);
+            this.btnActualizar.TabIndex = 0;
+            this.btnActualizar.Text = "🔄 Actualizar";
+            this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Click += new System.EventHandler(this.BtnActualizar_Click);
+
+            // 
+            // btnSellar
+            // 
+            this.btnSellar.BackColor = System.Drawing.Color.FromArgb(96, 125, 139);
+            this.btnSellar.FlatAppearance.BorderSize = 0;
+            this.btnSellar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSellar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnSellar.ForeColor = System.Drawing.Color.White;
+            this.btnSellar.Location = new System.Drawing.Point(119, 5);
+            this.btnSellar.Name = "btnSellar";
+            this.btnSellar.Size = new System.Drawing.Size(110, 32);
+            this.btnSellar.TabIndex = 1;
+            this.btnSellar.Text = "📄 Sellar XML";
+            this.btnSellar.UseVisualStyleBackColor = false;
+            this.btnSellar.Click += new System.EventHandler(this.BtnSellarXML_Click);
+
             // 
             // btnEditar
             // 
-            this.btnEditar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnEditar.Location = new System.Drawing.Point(904, 132);
+            this.btnEditar.BackColor = System.Drawing.Color.FromArgb(138, 122, 74);
+            this.btnEditar.FlatAppearance.BorderSize = 0;
+            this.btnEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnEditar.ForeColor = System.Drawing.Color.White;
+            this.btnEditar.Location = new System.Drawing.Point(235, 5);
             this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(91, 30);
-            this.btnEditar.TabIndex = 5;
-            this.btnEditar.Text = "&Editar";
-            this.btnEditar.UseVisualStyleBackColor = true;
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.btnEditar.Size = new System.Drawing.Size(110, 32);
+            this.btnEditar.TabIndex = 2;
+            this.btnEditar.Text = "✏️ Editar";
+            this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.BtnEditar_Click);
+
             // 
-            // idtitulo
+            // btnCancelar
             // 
-            this.idtitulo.DataPropertyName = "IdTitulo";
-            this.idtitulo.HeaderText = "idtitulo";
-            this.idtitulo.Name = "idtitulo";
-            this.idtitulo.Visible = false;
+            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(139, 92, 92);
+            this.btnCancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancelar.FlatAppearance.BorderSize = 0;
+            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCancelar.ForeColor = System.Drawing.Color.White;
+            this.btnCancelar.Location = new System.Drawing.Point(480, 5);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(100, 32);
+            this.btnCancelar.TabIndex = 3;
+            this.btnCancelar.Text = "❌ Cerrar";
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.BtnCancelar_Click);
+
             // 
-            // folio_electronico
+            // panelInferior - Panel Inferior con información
             // 
-            this.folio_electronico.DataPropertyName = "folio_electronico";
-            this.folio_electronico.HeaderText = "folio_electronico";
-            this.folio_electronico.Name = "folio_electronico";
-            this.folio_electronico.ReadOnly = true;
-            this.folio_electronico.Visible = false;
+            this.panelInferior.BackColor = System.Drawing.Color.FromArgb(245, 246, 248);
+            this.panelInferior.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelInferior.Controls.Add(this.lblRegistros);
+            this.panelInferior.Controls.Add(this.lblSeparador);
+            this.panelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelInferior.Location = new System.Drawing.Point(0, 530);
+            this.panelInferior.Name = "panelInferior";
+            this.panelInferior.Padding = new System.Windows.Forms.Padding(10);
+            this.panelInferior.Size = new System.Drawing.Size(1100, 35);
+            this.panelInferior.TabIndex = 3;
+
             // 
-            // Curp
+            // lblRegistros
             // 
-            this.Curp.DataPropertyName = "curp";
-            this.Curp.FillWeight = 37.25962F;
-            this.Curp.HeaderText = "CURP";
-            this.Curp.Name = "Curp";
-            this.Curp.ReadOnly = true;
+            this.lblRegistros.AutoSize = true;
+            this.lblRegistros.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.lblRegistros.Location = new System.Drawing.Point(18, 8);
+            this.lblRegistros.Name = "lblRegistros";
+            this.lblRegistros.Size = new System.Drawing.Size(130, 15);
+            this.lblRegistros.TabIndex = 0;
+            this.lblRegistros.Text = "Total de registros: 0";
+
             // 
-            // Nombre
+            // lblSeparador
             // 
-            this.Nombre.DataPropertyName = "nombre";
-            this.Nombre.FillWeight = 74.29253F;
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.Name = "Nombre";
-            this.Nombre.ReadOnly = true;
+            this.lblSeparador.AutoSize = true;
+            this.lblSeparador.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.lblSeparador.Location = new System.Drawing.Point(180, 8);
+            this.lblSeparador.Name = "lblSeparador";
+            this.lblSeparador.Size = new System.Drawing.Size(0, 15);
+            this.lblSeparador.TabIndex = 1;
+
             // 
-            // Paterno
+            // txtLog - Área de Log (oculta por defecto)
             // 
-            this.Paterno.DataPropertyName = "primerApellido";
-            this.Paterno.FillWeight = 104.0475F;
-            this.Paterno.HeaderText = "Paterno";
-            this.Paterno.Name = "Paterno";
-            this.Paterno.ReadOnly = true;
+            this.txtLog.BackColor = System.Drawing.Color.FromArgb(250, 250, 250);
+            this.txtLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLog.Font = new System.Drawing.Font("Consolas", 9F);
+            this.txtLog.Location = new System.Drawing.Point(12, 481);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
+            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtLog.Size = new System.Drawing.Size(950, 40);
+            this.txtLog.TabIndex = 2;
+            this.txtLog.Visible = false;
+
             // 
-            // Materno
+            // Alumnos - Configuración del Formulario
             // 
-            this.Materno.DataPropertyName = "segundoApellido";
-            this.Materno.FillWeight = 135.1416F;
-            this.Materno.HeaderText = "Materno";
-            this.Materno.Name = "Materno";
-            this.Materno.ReadOnly = true;
-            // 
-            // Carrera
-            // 
-            this.Carrera.DataPropertyName = "desc_titulo";
-            this.Carrera.FillWeight = 149.2588F;
-            this.Carrera.HeaderText = "Carrera";
-            this.Carrera.Name = "Carrera";
-            this.Carrera.ReadOnly = true;
-            // 
-            // Alumnos
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btncancelar;
-            this.ClientSize = new System.Drawing.Size(1007, 554);
-            this.Controls.Add(this.btnEditar);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.btncancelar);
-            this.Controls.Add(this.Btn_xml);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dgv_alumnos);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.BackColor = System.Drawing.Color.White;
+            this.CancelButton = this.btnCancelar;
+            this.ClientSize = new System.Drawing.Size(1100, 565);
+            this.Controls.Add(this.txtLog);
+            this.Controls.Add(this.panelInferior);
+            this.Controls.Add(this.panelSuperior);
+            this.Controls.Add(this.dgvAlumnos);
+
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Alumnos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Alumnos";
+            this.Text = "🎓 Gestión de Alumnos";
+
             this.Load += new System.EventHandler(this.Alumnos_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_alumnos)).EndInit();
+            this.Shown += new System.EventHandler(this.Alumnos_Shown);
+
+            // ==================== FINALIZACIÓN ====================
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAlumnos)).EndInit();
+            this.panelSuperior.ResumeLayout(false);
+            this.panelBusqueda.ResumeLayout(false);
+            this.panelBusqueda.PerformLayout();
+            this.panelAcciones.ResumeLayout(false);
+            this.panelInferior.ResumeLayout(false);
+            this.panelInferior.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgv_alumnos;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button Btn_xml;
-        private System.Windows.Forms.Button btncancelar;
-        private System.Windows.Forms.TextBox textBox1;
+        // ==================== CONTROLES ====================
+
+        // DataGridView
+        private System.Windows.Forms.DataGridView dgvAlumnos;
+
+        // Paneles
+        private System.Windows.Forms.Panel panelSuperior;
+        private System.Windows.Forms.Panel panelBusqueda;
+        private System.Windows.Forms.Panel panelAcciones;
+        private System.Windows.Forms.Panel panelInferior;
+
+        // Controles de búsqueda
+        private System.Windows.Forms.Label lblBuscar;
+        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.Button btnBuscar;
+
+        // Botones de acción
+        private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.Button btnSellar;
         private System.Windows.Forms.Button btnEditar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idtitulo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn folio_electronico;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Curp;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Paterno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Materno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Carrera;
+        private System.Windows.Forms.Button btnCancelar;
+
+        // Información
+        private System.Windows.Forms.Label lblRegistros;
+        private System.Windows.Forms.Label lblSeparador;
+
+        // Log
+        private System.Windows.Forms.TextBox txtLog;
+
+        // ==================== COLUMNAS ====================
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIdTitulo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFolioElectronico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCurp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPaterno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMaterno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCarrera;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEstatus;
     }
 }
