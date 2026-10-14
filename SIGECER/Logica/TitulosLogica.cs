@@ -59,7 +59,7 @@ namespace Sigecer.Logica
                                            FechaImpreasion = a.FechaImpreasion == null ? null : a.FechaImpreasion,
                                            nombre_Alumno = a.nombre.Trim() + " " + a.primerApellido.Trim() + " " + a.segundoApellido.Trim(),
                                            ModTitu = b.Modo_titulacion,
-                                           Carrera = c.CARRERA
+                                           Carrera = c.DESC_CEDULA
                                        }).ToList();
                         foreach (var a in titulos)
                         {
@@ -99,7 +99,7 @@ namespace Sigecer.Logica
                                            FechaImpreasion = a.FechaImpreasion == null ? null : a.FechaImpreasion,
                                            nombre_Alumno = a.nombre.Trim() + " " + a.primerApellido.Trim() + " " + a.segundoApellido.Trim(),
                                            ModTitu = b.Modo_titulacion,
-                                           Carrera = c.CARRERA
+                                           Carrera = c.DESC_CEDULA
                                        }).ToList();
                         foreach (var a in titulos)
                         {
@@ -210,7 +210,7 @@ namespace Sigecer.Logica
                         FechaImpreasion = x.a.FechaImpreasion,
                         nombre_Alumno = x.a.nombre.Trim() + " " + x.a.primerApellido.Trim() + " " + x.a.segundoApellido.Trim(),
                         ModTitu = x.b.Modo_titulacion,
-                        Carrera = x.c.CARRERA
+                        Carrera = x.c.DESC_CEDULA
                     }).ToList();
 
                     foreach (var a in resultados)

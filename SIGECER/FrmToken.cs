@@ -44,7 +44,7 @@ namespace Sigecer
                     {
                         token = id,
                         fechaInicio = DateTime.Now,
-                        fehcaExpira = DateTime.Now.AddMinutes(30),
+                        fehcaExpira = DateTime.Now.AddDays(1),
                         activo = true,
                         user = dt.user
                         

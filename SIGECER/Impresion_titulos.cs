@@ -287,12 +287,12 @@ namespace Sigecer
                 {
 
                     var listaCarreras = ctx.tb_Carreras
-                                 .OrderBy(c => c.CARRERA)
-                                 .Select(c => new { c.IdCarrera, c.CARRERA })
+                                 .OrderBy(c => c.DESC_CEDULA)
+                                 .Select(c => new { c.IdCarrera, c.DESC_CEDULA })
                                  .ToList();
 
                     
-                    cmbCarrera.DisplayMember = "CARRERA";
+                    cmbCarrera.DisplayMember = "DESC_CEDULA";
                     cmbCarrera.ValueMember = "IdCarrera";
 
                     
@@ -351,6 +351,11 @@ namespace Sigecer
 
             // Volver a cargar el Grid completo usando tu método original de la arquitectura
             cargarGrid();
+        }
+
+        private void cmbCarrera_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

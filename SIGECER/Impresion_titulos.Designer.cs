@@ -383,8 +383,9 @@
             this.cmbCarrera.FormattingEnabled = true;
             this.cmbCarrera.Location = new System.Drawing.Point(6, 78);
             this.cmbCarrera.Name = "cmbCarrera";
-            this.cmbCarrera.Size = new System.Drawing.Size(289, 21);
+            this.cmbCarrera.Size = new System.Drawing.Size(336, 21);
             this.cmbCarrera.TabIndex = 7;
+            this.cmbCarrera.SelectedIndexChanged += new System.EventHandler(this.cmbCarrera_SelectedIndexChanged);
             // 
             // txtCurp
             // 

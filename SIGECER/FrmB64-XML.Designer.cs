@@ -29,11 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnCopiarB64 = new System.Windows.Forms.Button();
             this.btnCargarXML = new System.Windows.Forms.Button();
             this.txtXml = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnDecodificarXml = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnDecodificar = new System.Windows.Forms.Button();
             this.txtBase64 = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -42,6 +44,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnCopiarB64);
             this.groupBox1.Controls.Add(this.btnCargarXML);
             this.groupBox1.Controls.Add(this.txtXml);
@@ -53,14 +56,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "XML ➡️ B64";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(202, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Selecciona el archivo a codificar :";
+            // 
             // btnCopiarB64
             // 
             this.btnCopiarB64.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnCopiarB64.Location = new System.Drawing.Point(460, 29);
+            this.btnCopiarB64.Location = new System.Drawing.Point(388, 20);
             this.btnCopiarB64.Name = "btnCopiarB64";
-            this.btnCopiarB64.Size = new System.Drawing.Size(75, 23);
+            this.btnCopiarB64.Size = new System.Drawing.Size(185, 23);
             this.btnCopiarB64.TabIndex = 2;
-            this.btnCopiarB64.Text = "Copiar📑 ";
+            this.btnCopiarB64.Text = "Copiar archivo en Base64📑 ";
             this.btnCopiarB64.UseVisualStyleBackColor = false;
             this.btnCopiarB64.Click += new System.EventHandler(this.btnCopiarB64_Click);
             // 
@@ -68,11 +80,11 @@
             // 
             this.btnCargarXML.BackColor = System.Drawing.Color.Maroon;
             this.btnCargarXML.ForeColor = System.Drawing.Color.White;
-            this.btnCargarXML.Location = new System.Drawing.Point(360, 29);
+            this.btnCargarXML.Location = new System.Drawing.Point(214, 24);
             this.btnCargarXML.Name = "btnCargarXML";
-            this.btnCargarXML.Size = new System.Drawing.Size(75, 23);
+            this.btnCargarXML.Size = new System.Drawing.Size(94, 23);
             this.btnCargarXML.TabIndex = 1;
-            this.btnCargarXML.Text = "XML";
+            this.btnCargarXML.Text = "Buscar XML";
             this.btnCargarXML.UseVisualStyleBackColor = false;
             this.btnCargarXML.Click += new System.EventHandler(this.btnCargarXML_Click);
             // 
@@ -86,7 +98,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnDecodificarXml);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.btnDecodificar);
             this.groupBox2.Controls.Add(this.txtBase64);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(628, 12);
@@ -94,19 +107,28 @@
             this.groupBox2.Size = new System.Drawing.Size(628, 565);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "B64 ➡️ XML ";
+            this.groupBox2.Text = " Decodificar";
             // 
-            // btnDecodificarXml
+            // label2
             // 
-            this.btnDecodificarXml.BackColor = System.Drawing.Color.Maroon;
-            this.btnDecodificarXml.ForeColor = System.Drawing.Color.White;
-            this.btnDecodificarXml.Location = new System.Drawing.Point(527, 20);
-            this.btnDecodificarXml.Name = "btnDecodificarXml";
-            this.btnDecodificarXml.Size = new System.Drawing.Size(75, 23);
-            this.btnDecodificarXml.TabIndex = 1;
-            this.btnDecodificarXml.Text = "B64";
-            this.btnDecodificarXml.UseVisualStyleBackColor = false;
-            this.btnDecodificarXml.Click += new System.EventHandler(this.btnDecodificarXml_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(25, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(204, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Pega en el recuadro el código B64";
+            // 
+            // btnDecodificar
+            // 
+            this.btnDecodificar.BackColor = System.Drawing.Color.Maroon;
+            this.btnDecodificar.ForeColor = System.Drawing.Color.White;
+            this.btnDecodificar.Location = new System.Drawing.Point(489, 25);
+            this.btnDecodificar.Name = "btnDecodificar";
+            this.btnDecodificar.Size = new System.Drawing.Size(93, 23);
+            this.btnDecodificar.TabIndex = 1;
+            this.btnDecodificar.Text = "Decodificar";
+            this.btnDecodificar.UseVisualStyleBackColor = false;
+            this.btnDecodificar.Click += new System.EventHandler(this.btnDecodificar_Click);
             // 
             // txtBase64
             // 
@@ -138,6 +160,7 @@
             this.Name = "FrmB64_XML";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "B64 - XML";
+            this.Load += new System.EventHandler(this.FrmB64_XML_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -154,7 +177,9 @@
         private System.Windows.Forms.TextBox txtBase64;
         private System.Windows.Forms.Button btnCargarXML;
         private System.Windows.Forms.Button btnCopiarB64;
-        private System.Windows.Forms.Button btnDecodificarXml;
+        private System.Windows.Forms.Button btnDecodificar;
         private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
