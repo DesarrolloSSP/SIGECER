@@ -141,26 +141,32 @@ namespace Sigecer
         {
             try
             {
-                var horaActual = DateTime.Now.ToString("HH:mm");
-                var fechaActual = DateTime.Now.ToShortDateString();
+                //var horaActual = DateTime.Now.ToString("HH:mm");
+                //var fechaActual = DateTime.Now.ToShortDateString();
+
+                DateTime ahora = DateTime.Now;
 
 
                 using (DBCERCEISEntities ctx = new DBCERCEISEntities())
                 {
                     tb_token token = ctx.tb_token.Where(x => x.activo == true).FirstOrDefault();
+
                     if (token != null)
                     {
-                        var fecha_token = Convert.ToString(token.fehcaExpira);
+                        //var fecha_token = Convert.ToString(token.fehcaExpira);
 
-                        DateTime fecha_date = Convert.ToDateTime(fecha_token);
-                        var f_token = fecha_date.ToString("dd/MM/yyyy");
-                        var h_token = fecha_date.ToString("HH:mm");
+                        //DateTime fecha_date = Convert.ToDateTime(fecha_token);
+                        //var f_token = fecha_date.ToString("dd/MM/yyyy");
+                        //var h_token = fecha_date.ToString("HH:mm");
 
-                        TimeSpan r = TimeSpan.Parse(horaActual);
-                        TimeSpan a = TimeSpan.Parse(h_token);
+                        //TimeSpan r = TimeSpan.Parse(horaActual);
+                        //TimeSpan a = TimeSpan.Parse(h_token);
+
+                        DateTime fechaExpira = Convert.ToDateTime(token.fehcaExpira);
 
 
-                        if (fechaActual == f_token && r <= a)
+                        //if (fechaActual == f_token && r <= a)
+                        if (fechaExpira >= ahora)
                         {
                             btnSellar.Enabled = true;
                         }
